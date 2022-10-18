@@ -1,13 +1,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column,Integer,String
+from sqlalchemy import Column,Integer,String,ForeignKey
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql.expression import and_,or_
 
 engine = create_engine("sqlite:///test.db")
 Base=declarative_base()
 session=sessionmaker(bind=engine)()
-Base.metadata.create_all(engine)
+
 #****************** make tables *********************
 class students(Base):
 	__tablename__="students"
@@ -17,15 +17,16 @@ class workers(Base):
 	__tablename__="workers"
 	id=Column('id',Integer,unique=True,primary_key=True)
 	name=Column('name',String(30))
+Base.metadata.create_all(engine)
 #**************************************************
 
 
 #****************** select ******************
 
 #.........select all rows.............
-students=session.query(students).all()
-for student in students:
-	print(student.id,student.name)
+# students=session.query(students).all()
+# for student in students:
+# 	print(student.id,student.name)
 
 #.........select single rows.............
 # student=session.query(students).filter(students.name=='sina').first()
